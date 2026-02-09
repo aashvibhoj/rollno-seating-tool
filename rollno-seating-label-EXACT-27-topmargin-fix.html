@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Roll No Seating Plan – EXACT 27 TOP MARGIN FIX</title>
+<style>
+/* A4 PAGE – TOP MARGIN REDUCED */
+@page{
+  size: A4;
+  margin-top: 6mm;
+  margin-left: 12mm;
+  margin-right: 12mm;
+  margin-bottom: 12mm;
+}
+
+html, body{
+  margin:0;
+  padding:0;
+  font-family: Arial, sans-serif;
+}
+
+/* SCREEN CONTROLS */
+.controls{
+  padding:8px;
+}
+input,button{
+  padding:6px;
+  margin:4px;
+  font-size:14px;
+}
+
+/* ONE PAGE = EXACT 27 */
+.page{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  gap:4.5mm;
+  padding:4mm;
+  page-break-after: always;
+}
+
+/* BOX – NARROW & SHORT */
+.label{
+  height:25mm;
+  border:1.3px solid #000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:29px;
+  font-weight:800;
+}
+
+/* PRINT CLEAN */
+@media print{
+  .controls, h2{
+    display:none !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<h2>Roll No Seating Plan – EXACT 27 (Top Margin Reduced)</h2>
+
+<div class="controls">
+  Start Roll No:
+  <input type="number" id="start">
+  End Roll No:
+  <input type="number" id="end">
+  <button onclick="makeLabels()">Generate</button>
+</div>
+
+<div id="output"></div>
+
+<script>
+function makeLabels(){
+  let s = parseInt(document.getElementById("start").value);
+  let e = parseInt(document.getElementById("end").value);
+  let out = "";
+  let count = 0;
+
+  out += '<div class="page">';
+
+  for(let i=s;i<=e;i++){
+    out += `<div class="label">${i}</div>`;
+    count++;
+
+    if(count % 27 === 0){
+      out += '</div><div class="page">';
+    }
+  }
+
+  out += '</div>';
+  document.getElementById("output").innerHTML = out;
+}
+</script>
+
+</body>
+</html>
